@@ -1,27 +1,17 @@
 import React, { useState } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import { Box, CardActions, CardMedia, Typography } from "@mui/material";
+import { Box, CardActions, CardMedia, TextField, Typography } from "@mui/material";
 import { Button, CardHeader } from "react-bootstrap";
 import Modal from "@mui/material/Modal";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../redux/slices/cartSlice";
-export default function Book({ book, addDelete, onDelete }) {
+import PopupModal from "./PopupModal";
+export default function Book({ book, addDelete, onDelete, role }) {
   const [open, setOpen] = useState(false);
+  const [editMode, setEditMode] = useState(false);
   const dispatch = useDispatch();
-  const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  pt: 2,
-  px: 4,
-  pb: 3,
-};
+  
   const handleAddToCart = () => {
     dispatch(addToCart(book));
     setOpen(true);
@@ -29,6 +19,10 @@ export default function Book({ book, addDelete, onDelete }) {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleEdit = () => {
+    setEditMode(true);
+  }
   return (
     <Card
       sx={{
@@ -45,6 +39,7 @@ export default function Book({ book, addDelete, onDelete }) {
       ></CardMedia>
       <CardHeader>
         <h2>{book.title}</h2>
+        <TextField placeholder={book.title} variant="standard"/>
       </CardHeader>
       <CardContent sx={{ flexGrow: 1 }}>
         <Typography variant="body2">{book.description}</Typography>
@@ -55,22 +50,10 @@ export default function Book({ book, addDelete, onDelete }) {
       <CardActions>
         <Button onClick={handleAddToCart}>Add to cart</Button>
         {addDelete ? <Button onClick={() => onDelete(book)}>Delete</Button> : <></>}   
+        {role === "admin" ? <Button onClick={() => onDelete(book._id)}>Delete</Button> : <></>}   
+        {role === "admin" ? <Button >Edit</Button> : <></>}   
       </CardActions>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box  sx={{...style, width: 400 }}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Update
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            {book.title} added to your cart
-          </Typography>
-        </Box>
-      </Modal>
+      <PopupModal open={open} onClose={handleClose} title={book.title}/>
     </Card>
   );
 }
