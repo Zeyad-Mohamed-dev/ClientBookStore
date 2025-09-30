@@ -8,7 +8,7 @@ export default function NavBar() {
     <>
       <Navbar bg="dark" variant="dark" expand="lg">
         <Container>
-          <Navbar.Brand as={Link} to="/home">
+          <Navbar.Brand as={Link} to="/home" className="col-8">
             BookStore
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />

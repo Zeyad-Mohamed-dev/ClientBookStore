@@ -4,8 +4,11 @@ import CardContent from "@mui/material/CardContent";
 import { Box, CardActions, CardMedia, Typography } from "@mui/material";
 import { Button, CardHeader } from "react-bootstrap";
 import Modal from "@mui/material/Modal";
-export default function Book({ book }) {
+import { useDispatch } from "react-redux";
+import { addToCart } from "../redux/slices/cartSlice";
+export default function Book({ book, addDelete, onDelete }) {
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
   const style = {
   position: 'absolute',
   top: '50%',
@@ -20,6 +23,7 @@ export default function Book({ book }) {
   pb: 3,
 };
   const handleAddToCart = () => {
+    dispatch(addToCart(book));
     setOpen(true);
   };
   const handleClose = () => {
@@ -50,6 +54,7 @@ export default function Book({ book }) {
       </CardContent>
       <CardActions>
         <Button onClick={handleAddToCart}>Add to cart</Button>
+        {addDelete ? <Button onClick={() => onDelete(book)}>Delete</Button> : <></>}   
       </CardActions>
       <Modal
         open={open}
