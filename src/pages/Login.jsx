@@ -4,7 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router";
 import LoginForm from "../components/LoginForm";
 import { useDispatch } from "react-redux";
-import { setUser } from "../redux/userSLices";
+import { setUserGlobal } from "../redux/userSLices";
 export default function Login() {
   const nav = useNavigate();
   const dispatch = useDispatch();
@@ -24,7 +24,7 @@ export default function Login() {
     );
     if(res.status === 200) {
       localStorage.setItem("token", res.data.token);
-      dispatch(setUser());
+      dispatch(setUserGlobal());
       nav("/home");
     }
   }

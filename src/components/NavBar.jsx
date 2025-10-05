@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Navbar, Nav, Container } from "react-bootstrap";
+import { useSelector } from "react-redux";
 
 export default function NavBar() {
+  const user = useSelector(state => state.user.value);
+  const role = user.role;
+  console.log(user);
   return (
     <>
       <Navbar bg="dark" variant="dark" expand="lg">
@@ -26,6 +30,9 @@ export default function NavBar() {
               <Nav.Link as={Link} to="/cart">
                 Cart
               </Nav.Link>
+              {role === "admin" ? <Nav.Link as={Link} to="/admin">
+                Admin
+              </Nav.Link> : <></>}
             </Nav>
           </Navbar.Collapse>
         </Container>
