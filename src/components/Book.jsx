@@ -7,6 +7,7 @@ import Modal from "@mui/material/Modal";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../redux/slices/cartSlice";
 import PopupModal from "./PopupModal";
+import FormPopup from "./FormPopup";
 export default function Book({ book, addDelete, onDelete, role }) {
   const [open, setOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -39,7 +40,6 @@ export default function Book({ book, addDelete, onDelete, role }) {
       ></CardMedia>
       <CardHeader>
         <h2>{book.title}</h2>
-        <TextField placeholder={book.title} variant="standard"/>
       </CardHeader>
       <CardContent sx={{ flexGrow: 1 }}>
         <Typography variant="body2">{book.description}</Typography>
@@ -51,9 +51,9 @@ export default function Book({ book, addDelete, onDelete, role }) {
         <Button onClick={handleAddToCart}>Add to cart</Button>
         {addDelete ? <Button onClick={() => onDelete(book)}>Delete</Button> : <></>}   
         {role === "admin" ? <Button onClick={() => onDelete(book._id)}>Delete</Button> : <></>}   
-        {role === "admin" ? <Button >Edit</Button> : <></>}   
       </CardActions>
       <PopupModal open={open} onClose={handleClose} title={book.title}/>
+      {/* <FormPopup handleClose={handleClose} show={editMode}/> */}
     </Card>
   );
 }

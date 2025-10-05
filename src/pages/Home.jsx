@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import Book from "../components/Book";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setUserGlobal } from "../redux/userSLices";
 
 export default function Home() {
   const [books, setBooks] = useState([]);
   const [user, setUser] = useState({});
+  const dispatch = useDispatch();
   useEffect(() => {
     const getAllBooks = async () => {
       try {
         const res = await axios.get("http://localhost:3000/books");
         if (res.status === 200) {
-          // console.log(res.data);
           setBooks(res.data);
         }
       } catch (e) {
@@ -28,6 +30,7 @@ export default function Home() {
           // console.log(res.data);
           console.log(res.data);
           setUser(res.data);
+          dispatch(setUserGlobal(res.data));
         }
       } catch (e) {
         console.error("error happend fetching books");

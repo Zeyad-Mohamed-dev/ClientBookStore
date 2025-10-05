@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import NavBar from "./components/NavBar";
 import Home from "./pages/Home";
 import Cart from "./pages/Cart";
+import Adminboard from "./pages/Adminboard";
 
 const router = createBrowserRouter([
     {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
                 path: "/cart",
                 element: <Cart />
             },
+            {
+                path: "/admin",
+                element: <Adminboard />
+            }
 
         ]}
 ])
